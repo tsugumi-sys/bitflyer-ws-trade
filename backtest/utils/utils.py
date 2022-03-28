@@ -5,7 +5,7 @@ from datetime import timedelta
 import pandas as pd
 
 sys.path.append(".")
-from gmo_hft_bot.db import models
+from bitflyer_hft_bot.db import models
 
 
 def get_ohlcv_df(ohlcv_data: List[models.OHLCV], time_span: int) -> pd.DataFrame:

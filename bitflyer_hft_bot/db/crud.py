@@ -7,7 +7,7 @@ import time
 from dateutil import parser
 import pandas as pd
 
-from gmo_hft_bot.db import schemas, models
+from bitflyer_hft_bot.db import schemas, models
 
 
 # Board methods
@@ -110,7 +110,7 @@ def get_oldest_board(db: Session, symbol: str, side: Optional[str] = None) -> Un
         return db.execute(stat, {"symbol": symbol, "side": "BUY"}).all(), db.execute(stat, {"symbol": symbol, "side": "SELL"}).all()
 
 
-def insert_board_items(db: Session, insert_items: Dict, max_board_counts: int = 1000) -> None:
+def insert_board_items(db: Session, symbol: str, insert_items: Dict, max_board_counts: int = 1000) -> None:
     """[Insert Board items.]
 
     Args:
@@ -126,8 +126,6 @@ def insert_board_items(db: Session, insert_items: Dict, max_board_counts: int = 
                         {"price": "455665","size": "0.1"},
                         {"price": "455655","size": "0.3"}
                     ],
-                    "symbol": "BTC",
-                    "timestamp": "2018-03-30T12:34:56.789Z"
                 }
         max_board_counts (int): Max board counts (group by timestamp)
     """
@@ -135,9 +133,8 @@ def insert_board_items(db: Session, insert_items: Dict, max_board_counts: int = 
     # ask items
     insert_asks_items = insert_items["asks"]
     insert_bids_item = insert_items["bids"]
-    timestamp = parser.parse(insert_items["timestamp"]).timestamp() * 1000
+    timestamp = time.time() * 1000
     timestamp = int(timestamp)
-    symbol = insert_items["symbol"]
 
     count_boards = _count_boards(db)
     if count_boards > max_board_counts:
@@ -270,7 +267,7 @@ def delete_tick_items(db: Session, delete_items: List[schemas.Tick]) -> None:
     db.commit()
 
 
-def insert_tick_item(db: Session, insert_item: Dict, max_rows: int = 1000) -> None:
+def insert_tick_item(db: Session, symbol: str, insert_items: List[Dict], max_rows: int = 1000) -> None:
     """Insert tick item
 
     Args:
@@ -294,21 +291,24 @@ def insert_tick_item(db: Session, insert_item: Dict, max_rows: int = 1000) -> No
         delete_tick_items(db=db, delete_items=delete_items)
 
     # insert new tick data
-    id = uuid.uuid4().hex
-    timestamp = parser.parse(insert_item["timestamp"]).timestamp() * 1000
-    timestamp = int(timestamp)
-    symbol = insert_item["symbol"]
-    tick_items = [
-        models.Tick(
-            id=id,
-            timestamp=timestamp,
-            price=float(insert_item["price"]),
-            size=float(insert_item["size"]),
-            symbol=symbol,
-        )
-    ]
-    db.add_all(tick_items)
-    db.commit()
+    if len(insert_items) > 0:
+        tick_items = []
+        for item in insert_items:
+            id = uuid.uuid4().hex
+            timestamp = parser.parse(item["exec_date"]).timestamp() * 1000
+            timestamp = int(timestamp)
+            tick_items.append(
+                models.Tick(
+                    id=id,
+                    timestamp=timestamp,
+                    price=float(item["price"]),
+                    size=float(item["size"]),
+                    side=item["side"],
+                    symbol=symbol,
+                )
+            )
+        db.add_all(tick_items)
+        db.commit()
 
 
 # OHLCV methods

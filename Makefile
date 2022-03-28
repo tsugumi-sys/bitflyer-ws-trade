@@ -1,14 +1,14 @@
 .PHONY run:
 run:
-	poetry run python ./gmo_hft_bot/main.py
+	poetry run python ./bitflyer_hft_bot/main.py
 
 .PHONY run_websockets:
 run_websockets:
-	poetry run python ./gmo_hft_bot/threads/websocket_threads.py
+	poetry run python ./bitflyer_hft_bot/threads/websocket_threads.py
 
 .PHONY run_trade:
 run_trade:
-	poetry run python ./gmo_hft_bot/threads/queue_and_trade_threads.py
+	poetry run python ./bitflyer_hft_bot/threads/queue_and_trade_threads.py
 
 .PHONY test:
 test:
@@ -22,7 +22,7 @@ run_backtest:
 # DEBUG
 .PHONY run_with_mprof:
 run_with_mprof:
-	poetry run mprof run ./gmo_hft_bot/main.py
+	poetry run mprof run ./bitflyer_hft_bot/main.py
 
 .PHONY mprof_plot:
 mprof_plot:

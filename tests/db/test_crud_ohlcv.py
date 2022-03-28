@@ -6,8 +6,8 @@ from dateutil import parser
 from tests.utils import response_schemas
 
 sys.path.append("./gmo-websocket/")
-from gmo_hft_bot.db import crud, models, schemas
-from gmo_hft_bot.db.database import initialize_database
+from bitflyer_hft_bot.db import crud, models, schemas
+from bitflyer_hft_bot.db.database import initialize_database
 
 database_engine, SessionLocal = initialize_database(uri=None)
 

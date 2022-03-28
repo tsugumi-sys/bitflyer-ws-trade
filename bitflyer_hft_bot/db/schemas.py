@@ -29,6 +29,7 @@ class TickBase(BaseModel):
     price: float
     size: float
     symbol: str
+    side: str
 
 
 class TickCreate(TickBase):

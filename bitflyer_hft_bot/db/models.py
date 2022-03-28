@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Float, String, Boolean
 
-from gmo_hft_bot.db.database import Base
+from bitflyer_hft_bot.db.database import Base
 
 # do not use relative import refere from the issue https://github.com/pallets/flask-sqlalchemy/issues/672
 
@@ -28,6 +28,7 @@ class Tick(Base):
     price = Column(Float, index=True)
     size = Column(Float)
     symbol = Column(String(10), index=True)
+    side = Column(String(10))
 
 
 class OHLCV(Base):

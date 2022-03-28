@@ -5,8 +5,8 @@ import sys
 
 sys.path.append(".")
 from backtest.utils.utils import get_ohlcv_df
-from gmo_hft_bot.db.crud import get_ohlcv_with_symbol
-from gmo_hft_bot.db.database import initialize_database
+from bitflyer_hft_bot.db.crud import get_ohlcv_with_symbol
+from bitflyer_hft_bot.db.database import initialize_database
 
 
 def volume_plot(ax, ohlcv_data):

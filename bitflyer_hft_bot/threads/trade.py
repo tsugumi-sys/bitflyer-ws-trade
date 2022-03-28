@@ -2,15 +2,16 @@ import sys
 import asyncio
 import logging
 import time
-import aiohttp
+
+# import aiohttp
 import traceback
 
 import sqlalchemy
 
 sys.path.append(".")
-from gmo_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
-from gmo_hft_bot.db import crud
-from gmo_hft_bot.utils.custom_exceptions import ConnectionFailedError
+from bitflyer_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
+from bitflyer_hft_bot.db import crud
+from bitflyer_hft_bot.utils.custom_exceptions import ConnectionFailedError
 
 
 class Trader:
@@ -49,19 +50,19 @@ class Trader:
                         # Buy
                         logger.info("Buy order.")
                         # Dummy order
-                        request_url, headers = queue_and_trade_manager.test_http_private_request_args()
-                        async with aiohttp.ClientSession() as session:
-                            async with session.get(request_url, headers=headers) as response:
-                                _ = await response.json()
+                        # request_url, headers = queue_and_trade_manager.test_http_private_request_args()
+                        # async with aiohttp.ClientSession() as session:
+                        #     async with session.get(request_url, headers=headers) as response:
+                        #         _ = await response.json()
 
                     if predict_info.is_sell_entry is True:
                         # Sell
                         logger.info("Sell order")
                         # Dummy order
-                        request_url, headers = queue_and_trade_manager.test_http_private_request_args()
-                        async with aiohttp.ClientSession() as session:
-                            async with session.get(request_url, headers=headers) as response:
-                                _ = await response.json()
+                        # request_url, headers = queue_and_trade_manager.test_http_private_request_args()
+                        # async with aiohttp.ClientSession() as session:
+                        #     async with session.get(request_url, headers=headers) as response:
+                        #         _ = await response.json()
 
                     with SessionLocal() as db:
                         buy_predict_item = {

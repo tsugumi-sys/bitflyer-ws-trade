@@ -10,10 +10,10 @@ from dotenv import load_dotenv
 import sqlalchemy.orm  # noqa: F401
 
 sys.path.append(".")
-from gmo_hft_bot.utils.logger_utils import LOGGER_FORMAT
-from gmo_hft_bot.utils.custom_exceptions import ConnectionFailedError
-from gmo_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
-from gmo_hft_bot.processes import get_logging_process, websocket_process, get_manage_queue_and_trade_process
+from bitflyer_hft_bot.utils.logger_utils import LOGGER_FORMAT
+from bitflyer_hft_bot.utils.custom_exceptions import ConnectionFailedError
+from bitflyer_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
+from bitflyer_hft_bot.processes import get_logging_process, websocket_process, get_manage_queue_and_trade_process
 
 # Load .env file
 load_dotenv()
@@ -29,7 +29,7 @@ def main():
     database_uri = "sqlite:///example.db"
 
     queue_and_trade_manager = QueueAndTradeManager(api_key=os.environ["EXCHANGE_API_KEY"], api_secret=os.environ["EXCHANGE_API_SECRET"])
-    symbol = "BTC_JPY"
+    symbol = "FX_BTC_JPY"
     time_span = 5
     max_orderbook_table_rows = 1000
     max_tick_table_rows = 1000

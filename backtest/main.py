@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import sqlalchemy.orm  # noqa: F401
 
 sys.path.append(".")
-from gmo_hft_bot.db.database import initialize_database
-from gmo_hft_bot.db import crud
+from bitflyer_hft_bot.db.database import initialize_database
+from bitflyer_hft_bot.db import crud
 from backtest.visualize.ohlcv import ohlcv_plot
 from backtest.utils.utils import get_ohlcv_df, get_predict_df, match_timestamp_for_ohlcv
 from backtest.backtest_trade.richman_backtest import richman_backtest

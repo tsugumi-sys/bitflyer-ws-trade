@@ -3,7 +3,7 @@ import sys
 import time
 
 sys.path.append("./gmo-websocket/")
-from gmo_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
+from bitflyer_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
 
 
 class TestQueueAndTradeManager(unittest.TestCase):

@@ -8,10 +8,10 @@ from dotenv import load_dotenv
 import sqlalchemy
 
 sys.path.append(".")
-from gmo_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
-from gmo_hft_bot.threads.websocket_threads import run_multiple_websockets
-from gmo_hft_bot.threads.queue_and_trade_threads import run_manage_queue_and_trading
-from gmo_hft_bot.utils.logger_utils import LOGGER_FORMAT, listener_configurer, listener_process, worker_configurer
+from bitflyer_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
+from bitflyer_hft_bot.threads.websocket_threads import run_multiple_websockets
+from bitflyer_hft_bot.threads.queue_and_trade_threads import run_manage_queue_and_trading
+from bitflyer_hft_bot.utils.logger_utils import LOGGER_FORMAT, listener_configurer, listener_process, worker_configurer
 
 # Load .env file
 load_dotenv()

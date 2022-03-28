@@ -7,19 +7,21 @@ import logging
 from dotenv import load_dotenv
 
 sys.path.append(".")
-from gmo_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
-from gmo_hft_bot.utils.custom_exceptions import ConnectionFailedError
-from gmo_hft_bot.utils.logger_utils import LOGGER_FORMAT, worker_configurer
-from gmo_hft_bot.threads.connect_orderbook_ws import ConnectOrderbookWs
-from gmo_hft_bot.threads.connect_tick_ws import ConnectTickWs
+from bitflyer_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
+from bitflyer_hft_bot.utils.custom_exceptions import ConnectionFailedError
+from bitflyer_hft_bot.utils.logger_utils import LOGGER_FORMAT, worker_configurer
+from bitflyer_hft_bot.threads.connect_orderbook_ws import ConnectOrderbookWs
+from bitflyer_hft_bot.threads.connect_tick_ws import ConnectTickWs
 
 
 async def run_multiple_websockets(symbol: str, logger: logging.Logger, queue_and_trade_manager: QueueAndTradeManager):
     connect_orderbook_ws = ConnectOrderbookWs()
     connect_tick_ws = ConnectTickWs()
     await asyncio.gather(
-        connect_orderbook_ws.run(ws_url="wss://api.coin.z.com/ws/public/v1", symbol=symbol, logger=logger, queue_and_trade_manager=queue_and_trade_manager),
-        connect_tick_ws.run(ws_url="wss://api.coin.z.com/ws/public/v1", symbol=symbol, logger=logger, queue_and_trade_manager=queue_and_trade_manager),
+        connect_orderbook_ws.run(
+            ws_url="wss://ws.lightstream.bitflyer.com/json-rpc", symbol=symbol, logger=logger, queue_and_trade_manager=queue_and_trade_manager
+        ),
+        connect_tick_ws.run(ws_url="wss://ws.lightstream.bitflyer.com/json-rpc", symbol=symbol, logger=logger, queue_and_trade_manager=queue_and_trade_manager),
     )
 
 

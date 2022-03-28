@@ -10,14 +10,14 @@ from dotenv import load_dotenv
 import sqlalchemy
 
 sys.path.append(".")
-from gmo_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
-from gmo_hft_bot.threads.manage_orderbook_queue import OrderbookQueueManager
-from gmo_hft_bot.threads.manage_tick_queue import TickQueueManager
-from gmo_hft_bot.threads.trade import Trader
-from gmo_hft_bot.db import models
-from gmo_hft_bot.db.database import initialize_database
-from gmo_hft_bot.utils.custom_exceptions import ConnectionFailedError
-from gmo_hft_bot.utils.logger_utils import LOGGER_FORMAT, worker_configurer
+from bitflyer_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
+from bitflyer_hft_bot.threads.manage_orderbook_queue import OrderbookQueueManager
+from bitflyer_hft_bot.threads.manage_tick_queue import TickQueueManager
+from bitflyer_hft_bot.threads.trade import Trader
+from bitflyer_hft_bot.db import models
+from bitflyer_hft_bot.db.database import initialize_database
+from bitflyer_hft_bot.utils.custom_exceptions import ConnectionFailedError
+from bitflyer_hft_bot.utils.logger_utils import LOGGER_FORMAT, worker_configurer
 
 
 async def run_manage_queue_and_trading(
@@ -58,6 +58,7 @@ async def run_manage_queue_and_trading(
                     SessionLocal=SessionLocal,
                 ),
                 orderbook_queue_manager.run(
+                    symbol=symbol,
                     max_orderbook_table_rows=max_orderbook_table_rows,
                     logger=logger,
                     queue_and_trade_manager=queue_and_trade_manager,

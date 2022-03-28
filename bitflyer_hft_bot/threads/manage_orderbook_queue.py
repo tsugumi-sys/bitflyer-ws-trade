@@ -6,9 +6,9 @@ import traceback
 import sqlalchemy
 
 sys.path.append(".")
-from gmo_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
-from gmo_hft_bot.db import crud
-from gmo_hft_bot.utils.custom_exceptions import ConnectionFailedError
+from bitflyer_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
+from bitflyer_hft_bot.db import crud
+from bitflyer_hft_bot.utils.custom_exceptions import ConnectionFailedError
 
 
 class OrderbookQueueManager:
@@ -16,6 +16,7 @@ class OrderbookQueueManager:
 
     async def run(
         self,
+        symbol: str,
         max_orderbook_table_rows: int,
         logger: logging.Logger,
         queue_and_trade_manager: QueueAndTradeManager,
@@ -32,7 +33,7 @@ class OrderbookQueueManager:
                             item = queue_and_trade_manager.get_orderbook_queue_item()
 
                             logger.debug("Add orderbook queue item to DB")
-                            crud.insert_board_items(db=db, insert_items=item, max_board_counts=max_orderbook_table_rows)
+                            crud.insert_board_items(db=db, symbol=symbol, insert_items=item, max_board_counts=max_orderbook_table_rows)
 
                 await asyncio.sleep(0.0)
             except asyncio.TimeoutError:

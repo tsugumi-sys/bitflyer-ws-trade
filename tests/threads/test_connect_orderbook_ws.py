@@ -10,10 +10,10 @@ import json
 from tests.utils.dummy_gmo_websocket import dummy_gmo_websockt_server
 
 sys.path.append(".")
-from gmo_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
-from gmo_hft_bot.utils.gmo_websocket_subscriber import GmoWebsocketSubscriber
-from gmo_hft_bot.threads.connect_orderbook_ws import ConnectOrderbookWs
-from gmo_hft_bot.utils.custom_exceptions import ConnectionFailedError
+from bitflyer_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
+from bitflyer_hft_bot.utils.bitflyer_websocket_subscriber import GmoWebsocketSubscriber
+from bitflyer_hft_bot.threads.connect_orderbook_ws import ConnectOrderbookWs
+from bitflyer_hft_bot.utils.custom_exceptions import ConnectionFailedError
 
 
 class TestConnectOrderbookWs(unittest.TestCase):

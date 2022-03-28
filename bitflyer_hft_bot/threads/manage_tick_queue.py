@@ -6,9 +6,9 @@ import traceback
 import sqlalchemy
 
 sys.path.append(".")
-from gmo_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
-from gmo_hft_bot.db import crud
-from gmo_hft_bot.utils.custom_exceptions import ConnectionFailedError
+from bitflyer_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
+from bitflyer_hft_bot.db import crud
+from bitflyer_hft_bot.utils.custom_exceptions import ConnectionFailedError
 
 
 class TickQueueManager:
@@ -35,7 +35,7 @@ class TickQueueManager:
                             item = queue_and_trade_manager.get_ticks_queue_item()
 
                             logger.debug("Add tick queue item to DB")
-                            crud.insert_tick_item(db=db, insert_item=item, max_rows=max_tick_table_rows)
+                            crud.insert_tick_item(db=db, symbol=symbol, insert_items=item, max_rows=max_tick_table_rows)
 
                     # Create ohlcv
                     crud.create_ohlcv_from_ticks(db=db, symbol=symbol, time_span=time_span, max_rows=max_ohlcv_table_rows)

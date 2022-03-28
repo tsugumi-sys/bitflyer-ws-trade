@@ -5,11 +5,11 @@ import logging
 from unittest.mock import MagicMock, patch, PropertyMock
 
 sys.path.append(".")
-from gmo_hft_bot.threads.manage_tick_queue import TickQueueManager
-from gmo_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
-from gmo_hft_bot.utils.custom_exceptions import ConnectionFailedError
-from gmo_hft_bot.db import models
-from gmo_hft_bot.db.database import initialize_database
+from bitflyer_hft_bot.threads.manage_tick_queue import TickQueueManager
+from bitflyer_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
+from bitflyer_hft_bot.utils.custom_exceptions import ConnectionFailedError
+from bitflyer_hft_bot.db import models
+from bitflyer_hft_bot.db.database import initialize_database
 
 database_engine, SessionLocal = initialize_database(uri=None)
 

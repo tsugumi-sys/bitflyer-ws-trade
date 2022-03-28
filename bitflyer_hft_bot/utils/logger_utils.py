@@ -5,7 +5,7 @@ import multiprocessing
 from typing import Callable, Tuple
 
 sys.path.append(".")
-from gmo_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
+from bitflyer_hft_bot.utils.queue_and_trade_manager import QueueAndTradeManager
 
 
 # References: https://docs.python.org/ja/3/howto/logging-cookbook.html

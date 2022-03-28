@@ -8,8 +8,8 @@ sys.path.append("./gmo_websocket/")
 # from gmo_hft_bot.queue_and_trade_manager import QueueAndTradeManager
 
 # from gmo_hft_bot.queue_and_trade_threads import manage_queue
-from gmo_hft_bot.db import models
-from gmo_hft_bot.db.database import initialize_database
+from bitflyer_hft_bot.db import models
+from bitflyer_hft_bot.db.database import initialize_database
 
 database_engine, SessionLocal = initialize_database(uri=None)
 

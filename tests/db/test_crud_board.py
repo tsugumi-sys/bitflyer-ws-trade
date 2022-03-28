@@ -4,8 +4,8 @@ import sys
 from tests.utils import response_schemas
 
 sys.path.append("./gmo_websocket/")
-from gmo_hft_bot.db import crud, models
-from gmo_hft_bot.db.database import initialize_database
+from bitflyer_hft_bot.db import crud, models
+from bitflyer_hft_bot.db.database import initialize_database
 
 database_engine, SessionLocal = initialize_database(uri=None)
 
