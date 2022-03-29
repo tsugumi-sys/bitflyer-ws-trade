@@ -67,7 +67,9 @@ def main():
     except Exception as e:
         logger.error(traceback.format_exc())
         logger.error(e)
-        raise ConnectionFailedError
+
+        logging_process.terminate()
+        queue_and_trade_process.terminate()
 
 
 if __name__ == "__main__":
