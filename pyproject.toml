@@ -19,6 +19,7 @@ pandas = "^1.4.1"
 numba = "^0.55.1"
 seaborn = "^0.11.2"
 memory-profiler = "^0.60.0"
+mplfinance = "^0.12.8-beta.9"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"
