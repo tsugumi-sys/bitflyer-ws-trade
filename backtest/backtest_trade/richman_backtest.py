@@ -15,7 +15,7 @@ def richman_backtest(ohlcv_df: pd.DataFrame, buy_df: pd.DataFrame, sell_df: pd.D
     predict_sell_entry = (sell_df["is_entry"] == True).to_numpy()  # noqa: E712
     # If you use two different model for buy and sell, you have to custom priority_buy_entry.
     # Else, priority_buy_entry is the same as buy_executed.
-    prioty_buy_entry = buy_executed
+    prioty_buy_entry = predict_buy_entry
 
     cumulative_return, possition, buy_entry_prices, sell_entry_prices, buy_exit_prices, sell_exit_prices = backtest(
         close=ohlcv_df["close"].to_numpy(),
@@ -59,10 +59,10 @@ def trade_executed(ohlcv_df: pd.DataFrame, target_df: pd.DataFrame, side: str) -
 
     merged_df = ohlcv_df.merge(target_df["price"], how="left", left_index=True, right_index=True)
     if side.upper() == "BUY":
-        executed = merged_df["price"] > merged_df["low"].shift(-1)
+        executed = merged_df["price"] >= merged_df["low"].shift(-1)
         return executed.to_numpy(), merged_df["price"].to_numpy()
     else:
-        executed = merged_df["price"] < merged_df["high"].shift(-1)
+        executed = merged_df["price"] <= merged_df["high"].shift(-1)
         return executed.to_numpy(), merged_df["price"].to_numpy()
 
 

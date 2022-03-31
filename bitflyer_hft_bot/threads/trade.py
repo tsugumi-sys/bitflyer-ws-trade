@@ -38,6 +38,10 @@ class Trader:
             ConnectionFailedError: Raise if threads stopped.
         """
         before_timestamp_per_span = None
+
+        # [Note]: Only local online backtest
+        before_buy_order_price = None
+        before_sell_order_price = None
         while self.RUNNING:
             try:
                 current_timestamp_per_span = time.time() // trade_time_span
@@ -82,6 +86,49 @@ class Trader:
                             "is_entry": predict_info.is_sell_entry,
                         }
                         crud.insert_predict_items(db=db, insert_items=[buy_predict_item, sell_predict_item])
+
+                        # [Note]: Only local online backtest
+                        before_buy_order_price = predict_info.buy_price
+                        before_sell_order_price = predict_info.sell_price
+                else:
+                    # Execution check
+                    with SessionLocal() as db:
+                        buy_board_items, sell_board_items = crud.get_current_board(db=db, symbol=symbol)
+
+                    if len(buy_board_items) > 0 and len(sell_board_items) > 0 and before_buy_order_price is not None:
+                        update_best_bid, update_best_ask = buy_board_items[-1], sell_board_items[0]
+                        update_best_bid_price = update_best_bid.price
+                        update_best_ask_price = update_best_ask.price
+                        update_predict_items = []
+                        if update_best_bid_price > before_buy_order_price:
+                            update_buy_item = {
+                                "side": "TrackBestBuy",
+                                "size": 0,
+                                "price": update_best_bid_price,
+                                "predict_value": 0,
+                                "symbol": symbol,
+                                "is_entry": False,
+                            }
+                            update_predict_items.append(update_buy_item)
+                            before_buy_order_price = update_best_bid_price
+
+                        if update_best_ask_price < before_sell_order_price:
+                            update_sell_item = {
+                                "side": "TrackBestSell",
+                                "size": 0,
+                                "price": update_best_ask_price,
+                                "predict_value": 0,
+                                "symbol": symbol,
+                                "is_entry": False,
+                            }
+                            update_predict_items.append(update_sell_item)
+                            before_sell_order_price = update_best_ask_price
+
+                        if len(update_predict_items) > 0:
+                            with SessionLocal() as db:
+                                crud.insert_predict_items(db=db, insert_items=update_predict_items)
+
+                    await asyncio.sleep(0.5)
 
                 before_timestamp_per_span = current_timestamp_per_span
 
