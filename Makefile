@@ -18,6 +18,9 @@ test:
 run_backtest:
 	poetry run python ./backtest/main.py
 
+.PHONY get_requirements_txt:
+get_requirements_txt:
+	poetry export --without-hashes --dev --output poetry-requirements.txt
 
 # DEBUG
 .PHONY run_with_mprof:
@@ -27,7 +30,3 @@ run_with_mprof:
 .PHONY mprof_plot:
 mprof_plot:
 	poetry run mprof plot
-
-.PHONY delete_pycache:
-delete_pycache:
-	find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
