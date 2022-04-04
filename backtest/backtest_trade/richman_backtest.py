@@ -27,7 +27,8 @@ def richman_backtest(ohlcv_df: pd.DataFrame, buy_df: pd.DataFrame, sell_df: pd.D
         buy_price=buy_price,
         sell_price=sell_price,
     )
-    return pd.DataFrame(
+
+    result_df = pd.DataFrame(
         {
             "cumulative_return": cumulative_return,
             "position": possition,
@@ -38,6 +39,9 @@ def richman_backtest(ohlcv_df: pd.DataFrame, buy_df: pd.DataFrame, sell_df: pd.D
         },
         index=ohlcv_df.index,
     )
+    result_df["buy_executed"] = buy_executed
+    result_df["sell_executed"] = sell_executed
+    return result_df
 
 
 def trade_executed(ohlcv_df: pd.DataFrame, target_df: pd.DataFrame, side: str) -> Tuple[np.ndarray, np.ndarray]:
